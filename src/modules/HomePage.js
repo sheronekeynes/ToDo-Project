@@ -291,7 +291,7 @@ function addNewProject(projectName) {
   // Check if projects is null or undefined
   if (!projects || typeof projects !== "object") {
     console.error("projects is null, undefined, or not an object");
-    return false;
+    projects = {}; //ititializi an empty object
   }
 
   if (!projects[projectName]) {
@@ -330,9 +330,11 @@ function getProjects() {
 function addTaskSection() {
   //project list from
   //const projectList=['coding' , 'trip','skincare','new project']
-  const projectList = Object.keys(
+
+  let projectList = Object.keys(
     JSON.parse(localStorage.getItem("projectList")) || {}
   );
+
   const priorityList = ["Low", "Medium", "High"];
 
   if (!projectList.includes("New Project")) {
@@ -342,7 +344,7 @@ function addTaskSection() {
   // main container
   const taskContainer = document.createElement("div");
 
- // taskContainer.style.display="none";
+  // taskContainer.style.display="none";
 
   const modalCont = document.createElement("form");
 
@@ -364,11 +366,10 @@ function addTaskSection() {
   const cancelBtnEl = document.createElement("button");
   const createBtnEl = document.createElement("button");
 
-    // Show the modal when it's added to the DOM
-    setTimeout(() => {
-      taskContainer.style.display = "block";
-    }, 0);
-  
+  // Show the modal when it's added to the DOM
+  setTimeout(() => {
+    taskContainer.style.display = "block";
+  }, 0);
 
   //create ids
   projectLabel.id = "project-label";
@@ -394,10 +395,8 @@ function addTaskSection() {
   saveNewProjectBtn.style.display = "none";
 
   //event listener for dropdown selection
-  projectSelect.addEventListener("change", (e) => {
-
+  projectSelect.addEventListener("click", (e) => {
     if (e.target.value === "New Project") {
-      
       // show the new project input and save button
       newProjectInput.style.display = "block";
       saveNewProjectBtn.style.display = "block";
@@ -589,13 +588,12 @@ function NavigationSection() {
     navMainCont.appendChild(addTask);
   });
 
-  
-    // Close modal when clicking outside
-    window.onclick = function (event) {
-      if (event.target === addTaskSection()) {
-        navMainCont.removeChild(addTask);
-      }
-    };
+  // Close modal when clicking outside
+  window.onclick = function (event) {
+    if (event.target === addTaskSection()) {
+      navMainCont.removeChild(addTask);
+    }
+  };
 
   // append child
   navMainCont.appendChild(homeIcon);
